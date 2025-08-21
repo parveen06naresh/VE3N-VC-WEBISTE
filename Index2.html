@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE3N - The Intelligence Engine for the New Gilded Age</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #6366f1;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #6366f1;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 120px 0 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-content {
+            width: 100%;
+        }
+
+        /* Homepage */
+        .hero {
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #6366f1 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #a0a0a0;
+            font-weight: 400;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 60px auto;
+            font-size: 1.2rem;
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #c0c0c0;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid #6366f1;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #6366f1;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-form {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c0c0c0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Section visibility */
+        .section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">VE3N</div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#features" class="nav-link">Technology</a></li>
+                    <li><a href="#pilot-program" class="nav-link">Pilot Program</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Homepage -->
+    <section id="home" class="section visible">
+        <div class="container">
+            <div class="hero">
+                <h1>The Intelligence Engine for the New Gilded Age</h1>
+                <h2>The future of deal flow isn't in a spreadsheet. It's here.</h2>
+                
+                <div class="hero-content">
+                    <p>VCs and financial analysts are not scattered. They're drowning.</p>
+                    
+                    <p>Drowning in pitch decks. Drowning in competitor news. Drowning in an endless torrent of unstructured data. Today's tools are built to help you manage the flood, not turn it off. We're building something that gets ahead of it—a system that finds the signal before it becomes noise.</p>
+                </div>
+
+                <a href="#pilot-program" class="cta-button">Request Private Beta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>VE3N emerged from a strategic pivot that recognized a fundamental gap in the venture capital industry. What began as a consumer AI platform evolved into something far more ambitious: a generative intelligence engine designed to give the world's most visionary firms an unfair advantage.</p>
+                    
+                    <p>We saw an industry drowning in data but starving for intelligence. Traditional tools manage information—we generate insight. Where others react to market signals, we anticipate them.</p>
+
+                    <div class="quote">
+                        "I didn't build VE3N for myself. I built it to give the world's most ambitious firms an unfair advantage. To change the game."
+                    </div>
+                </div>
+                
+                <div class="about-vision">
+                    <h2>Our Vision</h2>
+                    <p>The venture capital industry is on the cusp of a fundamental transformation. The firms that thrive in the next decade won't be those with the largest teams or the deepest networks—they'll be those with the smartest intelligence.</p>
+                    
+                    <p>VE3N represents a new paradigm: proactive intelligence that doesn't just analyze markets, but anticipates them. We're not building another tool for your workflow. We're building your Chief Intelligence Officer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-content">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h2 style="font-size: 2.5rem; color: #ffffff; margin-bottom: 20px;">Built for Advantage</h2>
+                    <p style="font-size: 1.2rem; color: #a0a0a0; max-width: 600px; margin: 0 auto;">Three core capabilities that redefine how venture intelligence works</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Autonomous Scout Agents</h3>
+                        <p>AI agents that continuously hunt for market signals and emerging companies from non-traditional sources. While others wait for pitch decks, you discover opportunities before they knock on doors. Our scouts monitor patent filings, academic research, regulatory changes, and alternative data streams to surface tomorrow's unicorns today.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Generative Due Diligence</h3>
+                        <p>Comprehensive, data-backed reports generated on demand for any company, trend, or industry. In minutes, not weeks. Our system synthesizes public records, financial data, market dynamics, and competitive landscapes into intelligence reports that would take analysts days to compile.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Alpha & Thesis Validation</h3>
+                        <p>Test your investment theses against real-time data and discover hidden market opportunities. VE3N doesn't just validate your hunches—it generates new ones. By analyzing patterns across markets, technologies, and consumer behavior, we help you see around corners that others can't.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 80px; text-align: center;">
+                    <h3 style="color: #6366f1; margin-bottom: 30px; font-size: 1.8rem;">The Technology Behind the Intelligence</h3>
+                    <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #b0b0b0;">Built on a multi-agent AI architecture that operates with military-grade security and privacy-first design. Our system doesn't just process data—it reasons with it, connects disparate signals, and generates insights that human analysts would miss. Every query, every report, every recommendation is generated fresh, ensuring you're never working with stale intelligence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pilot Program Section -->
+    <section id="pilot-program" class="section">
+        <div class="container">
+            <div class="contact-content">
+                <h2 style="font-size: 2.5rem; color: #ffffff; margin-bottom: 30px;">Apply for Our Pilot Program</h2>
+                <p style="font-size: 1.2rem; color: #a0a0a0; margin-bottom: 40px;">The pilot program is a highly selective initiative for a handful of visionary firms. We're not looking for customers—we're looking for partners who understand that the future of venture intelligence isn't just different, it's inevitable.</p>
+
+                <div class="contact-form">
+                    <form id="pilotForm" action="https://formspree.io/f/xdkokgpv" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name & Title</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="firm">Firm Name</label>
+                            <input type="text" id="firm" name="firm" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="aum">Assets Under Management (AUM)</label>
+                            <input type="text" id="aum" name="aum" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="thesis">Primary Investment Thesis</label>
+                            <input type="text" id="thesis" name="thesis" placeholder="e.g., SaaS, Fintech, Deep Tech, AI/ML" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reason">Why do you want to join the pilot program?</label>
+                            <textarea id="reason" name="reason" required></textarea>
+                        </div>
+
+                        <input type="hidden" name="_subject" value="New VE3N Pilot Program Application">
+                        <input type="hidden" name="_next" value="#success">
+
+                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 20px;">Submit Application</button>
+                    </form>
+
+                    <div id="success-message" class="hidden" style="margin-top: 30px; padding: 20px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #22c55e;">
+                        <p><strong>Application Submitted</strong></p>
+                        <p>Thank you for your interest in VE3N. We'll review your application and be in touch within 48 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 VE3N. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">VE3N is a Crown Legacy AI company.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                // Update active nav link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Scroll to section
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Section visibility on scroll
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Update active nav link
+                    const id = entry.target.id;
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Form submission - now using Formspree
+        document.getElementById('pilotForm').addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const successMessage = document.getElementById('success-message');
+            
+            submitButton.textContent = 'Submitting...';
+            submitButton.disabled = true;
+            
+            // The form will submit to Formspree automatically
+            // We'll show a brief loading state, then let Formspree handle the redirect
+            setTimeout(() => {
+                submitButton.textContent = 'Submit Application';
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Add loading animation to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
